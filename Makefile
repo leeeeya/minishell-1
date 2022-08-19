@@ -6,7 +6,7 @@
 #    By: falarm <falarm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 01:47:12 by falarm            #+#    #+#              #
-#    Updated: 2022/08/16 15:04:06 by falarm           ###   ########.fr        #
+#    Updated: 2022/08/17 21:03:53 by falarm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,6 @@ fclean:				clean
 re:					fclean all
 
 debug:
-					valgrind --leak-check=full --log-file="./report.log" ./minishell
+					valgrind --leak-check=full --log-file="./report.log" ./minishell > result
 
 .PHONY:				all		clean	fclean		re

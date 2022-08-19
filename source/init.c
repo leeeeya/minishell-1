@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 22:03:14 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/16 14:57:05 by falarm           ###   ########.fr       */
+/*   Updated: 2022/08/19 00:37:18 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ t_list	*init_envp_list(char **envp)
 	list = NULL;
 	while (*envp)
 	{
-		key_value = ft_split(*envp, '=');
-		elem = init_envp(key_value);
-		// free(key_value[2]);
-		free(key_value);
+		// key_value = ft_split(*envp, '=');
+		key_value = split_by_first(*envp, '=');
+		elem = init_envp(key_value[0], key_value[1]);
+		free_double_arr(key_value);
 		if (list)
 			add_env_value(list, elem);
 		else

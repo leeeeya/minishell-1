@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:39:09 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/15 22:18:52 by falarm           ###   ########.fr       */
+/*   Updated: 2022/08/19 01:11:33 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,23 @@ int		ft_unset(t_input *inp, t_list *envp);
 //ft_utils.c
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_lstswap(t_list *first, t_list *second, t_list *tmp);
+int		double_arr_size(char **arr);
+char	**split_by_first(char *s, char c);
 
 //init.c
 t_data	*init_data(char	**env);
 
 //ft_free.c
 void	free_data(t_data *data);
-void	free_double_arr(char **envp);
+void	free_double_arr(char **arr);
+void	free_inp(t_input *inp);
+void	del_envp(void *envp_list);
 
 //env_utils.c
-t_envp	*init_envp(char **key_value);
+t_envp	*init_envp(char	*key, char *value);
 void	add_env_value(t_list *envp_list, t_envp *envp);
-char	**get_envp(t_list *envp_list);
+char	*get_envp_value(t_list *envp, char *buf);
+void	change_env_value(t_envp *curr, t_envp *envp);
+// char	**get_envp(t_list *envp_list);
 
 #endif

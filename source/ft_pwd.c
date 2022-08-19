@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:37:37 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/05 22:10:17 by falarm           ###   ########.fr       */
+/*   Updated: 2022/08/17 00:11:57 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 int	ft_pwd(t_input *inp, t_list *envp)
 {
-	return (0);
+	char	*cwd;
+
+	(void) inp;
+	(void) envp;
+	cwd = getcwd(NULL, 0);
+	ft_putendl_fd(cwd, 1);
+	free(cwd);
+	return (errno);
 }
