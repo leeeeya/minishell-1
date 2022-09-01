@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:39:09 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/19 01:11:33 by falarm           ###   ########.fr       */
+/*   Updated: 2022/08/31 00:59:42 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,18 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <wait.h>
 
 # define TRUE 1
 # define FALSE 0
+
+# define PROMT "(ง •̀_•́)ง "
+# define RED   "\x1b[31m"
+# define BLU   "\x1B[34m"
+# define GRN   "\x1B[32m"
+# define CLOSE "\001\033[0m\002"				// Закрыть все свойства
+# define BLOD  "\001\033[1m\002"				// Подчеркнуть, жирным шрифтом, выделить
+# define BEGIN(x,y) "\001\033["#x";"#y"m\002"	// x: background, y: foreground
 
 typedef struct s_hist
 {
@@ -50,7 +59,7 @@ typedef struct s_input
 	int				infile;
 	int				outfile;
 	int				type_of_file;	//how open file
-	char			*hd_delimiter;
+	// char			*hd_delimiter;
 	struct s_input	*next;
 	struct s_input	*prev;
 }	t_input;
@@ -65,6 +74,7 @@ typedef struct s_data
 {
 	int				exit_flag;	//while false programm is working
 	int				exit_status;
+	int				*pipes;
 	t_list			*envp_list;
 	t_buildin		buildins[7];
 }	t_data;
@@ -86,18 +96,36 @@ char	**split_by_first(char *s, char c);
 
 //init.c
 t_data	*init_data(char	**env);
+int		init_pipes(t_data *data, int count);
 
 //ft_free.c
 void	free_data(t_data *data);
 void	free_double_arr(char **arr);
 void	free_inp(t_input *inp);
 void	del_envp(void *envp_list);
+void	close_pipes(t_data *data, int pipe_count);
 
 //env_utils.c
 t_envp	*init_envp(char	*key, char *value);
 void	add_env_value(t_list *envp_list, t_envp *envp);
 char	*get_envp_value(t_list *envp, char *buf);
 void	change_env_value(t_envp *curr, t_envp *envp);
-// char	**get_envp(t_list *envp_list);
+char	**get_envp(t_list *envp_list);
+
+//handlers.c
+void	sigint_handler(int n);
+void	sigquit_handler(int n);
+void	eof_handler(t_data *data);
+
+//ft_list.c
+int		lst_size(t_input *inp);
+
+//executer.c
+void	my_exec(t_data *data, t_input *inp);
+
+//errors.c
+void	error_malloc(t_data *data);
+void	my_perror(t_data *data);
+void	error_exit();
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 23:39:11 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/17 21:01:25 by falarm           ###   ########.fr       */
+/*   Updated: 2022/08/29 22:46:45 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,38 +84,38 @@ char	*get_envp_value(t_list *envp, char *buf)
 	return (NULL);
 }
 
-// char	*envp_str(t_envp *envp)
-// {
-// 	char	*res;
-// 	char	*tmp;
+char	*envp_str(t_envp *envp)
+{
+	char	*res;
+	char	*tmp;
 
-// 	if (envp->value)
-// 	{
-// 		tmp = ft_strjoin(envp->key, "=");
-// 		res = ft_strjoin(tmp, envp->value);
-// 		free(tmp);
-// 	}
-// 	else
-// 		res = ft_strdup(envp->key);
-// 	return (res);
-// }
+	if (envp->value)
+	{
+		tmp = ft_strjoin(envp->key, "=");
+		res = ft_strjoin(tmp, envp->value);
+		free(tmp);
+	}
+	else
+		res = ft_strdup(envp->key);
+	return (res);
+}
 
-// char	**get_envp(t_list *envp_list)
-// {
-// 	char	**envp;
-// 	t_list	*tmp;
-// 	int		i;
+char	**get_envp(t_list *envp_list)
+{
+	char	**envp;
+	t_list	*tmp;
+	int		i;
 
-// 	envp = (char **) malloc(sizeof(char *) * (ft_lstsize(envp_list) + 1));
-// 	if (!envp)
-// 		return (NULL);
-// 	tmp = envp_list;
-// 	i = 0;
-// 	while (tmp)
-// 	{
-// 		envp[i++] = envp_str(tmp->content);
-// 		tmp = tmp->next;
-// 	}
-// 	envp[i] = NULL;
-// 	return (envp);
-// }
+	envp = (char **) malloc(sizeof(char *) * (ft_lstsize(envp_list) + 1));
+	if (!envp)
+		return (NULL);
+	tmp = envp_list;
+	i = 0;
+	while (tmp)
+	{
+		envp[i++] = envp_str(tmp->content);
+		tmp = tmp->next;
+	}
+	envp[i] = NULL;
+	return (envp);
+}
