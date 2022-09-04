@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:39:09 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/31 00:59:42 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 23:47:59 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@
 # define TRUE 1
 # define FALSE 0
 
-# define PROMT "(ง •̀_•́)ง "
-# define RED   "\x1b[31m"
-# define BLU   "\x1B[34m"
-# define GRN   "\x1B[32m"
-# define CLOSE "\001\033[0m\002"				// Закрыть все свойства
-# define BLOD  "\001\033[1m\002"				// Подчеркнуть, жирным шрифтом, выделить
-# define BEGIN(x,y) "\001\033["#x";"#y"m\002"	// x: background, y: foreground
+# define PROMT_NORM "(ง •̀_•́)ง "
+# define PROMT_BAD  "(๑•̀ᗝ•́)૭ "
+# define RED   "\001\x1b[31m\002"
+# define BLU   "\001\x1B[34m\002"
+# define GRN   "\001\x1B[32m\002"
+# define CLOSE "\001\033[0m\002" // Закрыть все свойства
+# define BLOD  "\001\033[1m\002" // Подчеркнуть, жирным шрифтом, выделить
+// # define BEGIN(x,y) "\001\033["#x";"#y"m\002" x: background, y: foreground
 
 typedef struct s_hist
 {
@@ -58,13 +59,12 @@ typedef struct s_input
 	char			*outfile_name;
 	int				infile;
 	int				outfile;
-	int				type_of_file;	//how open file
-	// char			*hd_delimiter;
+	int				type_of_file;
 	struct s_input	*next;
 	struct s_input	*prev;
 }	t_input;
 
-typedef	struct s_buildin
+typedef struct s_buildin
 {
 	char			*name;
 	int				(*func)(t_input *, t_list *);
@@ -72,7 +72,7 @@ typedef	struct s_buildin
 
 typedef struct s_data
 {
-	int				exit_flag;	//while false programm is working
+	int				exit_flag;
 	int				exit_status;
 	int				*pipes;
 	t_list			*envp_list;
@@ -88,6 +88,9 @@ int		ft_export(t_input *inp, t_list *envp);
 int		ft_pwd(t_input *inp, t_list *envp);
 int		ft_unset(t_input *inp, t_list *envp);
 
+//main.c
+char	*print_promt(int status);
+
 //ft_utils.c
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_lstswap(t_list *first, t_list *second, t_list *tmp);
@@ -95,6 +98,7 @@ int		double_arr_size(char **arr);
 char	**split_by_first(char *s, char c);
 
 //init.c
+t_envp	*init_envp(char	*key, char *value);
 t_data	*init_data(char	**env);
 int		init_pipes(t_data *data, int count);
 
@@ -106,7 +110,6 @@ void	del_envp(void *envp_list);
 void	close_pipes(t_data *data, int pipe_count);
 
 //env_utils.c
-t_envp	*init_envp(char	*key, char *value);
 void	add_env_value(t_list *envp_list, t_envp *envp);
 char	*get_envp_value(t_list *envp, char *buf);
 void	change_env_value(t_envp *curr, t_envp *envp);
@@ -126,6 +129,7 @@ void	my_exec(t_data *data, t_input *inp);
 //errors.c
 void	error_malloc(t_data *data);
 void	my_perror(t_data *data);
-void	error_exit();
+void	error_exit(void);
+int		error_str(char *s, int code);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:36:22 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/18 14:27:07 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/03 00:24:35 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	ft_echo(t_input *inp, t_list *envp)
 {
@@ -32,5 +32,5 @@ int	ft_echo(t_input *inp, t_list *envp)
 			ft_putchar_fd(' ', 1);
 	}
 	write(1, "\n", f);
-	return (0);
+	return (EXIT_SUCCESS);
 }

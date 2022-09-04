@@ -6,26 +6,11 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 23:39:11 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/29 22:46:45 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 19:22:58 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_envp	*init_envp(char	*key, char *value)
-{
-	t_envp	*envp;
-
-	envp = (t_envp *) malloc(sizeof(t_envp));
-	if (!envp)
-		return (NULL);
-	envp->key = ft_strdup(key);
-	if (value)
-		envp->value = ft_strdup(value);
-	else
-		envp->value = NULL;
-	return (envp);
-}
 
 void	change_env_value(t_envp *curr, t_envp *envp)
 {

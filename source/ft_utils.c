@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 21:10:08 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/29 22:47:01 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/03 20:22:37 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	ft_lstswap(t_list *first, t_list *second, t_list *tmp)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	while (*s1 == *s2)
+	while (*s1 && *s2)
 	{
-		if (*s1 == '\0')
-			return (*s1 - *s2);
+		if (*s1 != *s2)
+			return ((unsigned char) *s1 - (unsigned char) *s2);
 		s1++;
 		s2++;
 	}
-	return (*s1 - *s2);
+	return ((unsigned char) *s1 - (unsigned char) *s2);
 }
 
 int	double_arr_size(char **arr)
@@ -63,7 +63,9 @@ char	**split_by_first(char *s, char c)
 	char	*tmp;
 
 	tmp = ft_strchr(s, '=');
-	if (++tmp)
+	if (!tmp)
+		return (NULL);
+	else if (++tmp)
 	{
 		res = (char **) malloc(sizeof(char *) * 3);
 		if (!res)

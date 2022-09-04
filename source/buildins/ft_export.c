@@ -6,11 +6,24 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:38:21 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/19 00:41:44 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 23:44:57 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+
+static int	is_valid(char *s)
+{
+	if (s && ft_isdigit(s[0]))
+		return (FALSE);
+	while (*s && *s != '=')
+	{
+		if (!ft_isalpha(*s) && !ft_isdigit(*s) && *s != '_')
+			return (FALSE);
+		s++;
+	}
+	return (TRUE);
+}
 
 void	env_copy(t_list *envp)
 {
@@ -31,24 +44,42 @@ void	env_copy(t_list *envp)
 	}
 }
 
+void	export_variable(t_list *envp, char *s)
+{
+	char	**key_value;
+	t_envp	*elem;
+
+	key_value = split_by_first(s, '=');
+	if (key_value)
+	{
+		elem = init_envp(key_value[0], key_value[1]);
+		add_env_value(envp, elem);
+		free(key_value);
+	}
+}
+
 int	ft_export(t_input *inp, t_list *envp)
 {
-	t_envp	*elem;
 	int		i;
-	char	**key_value;
+	int		res;
 
-	if (double_arr_size(inp->args) == 1)
+	res = EXIT_SUCCESS;
+	if (!inp->args[1])
 		env_copy(envp);
 	else
 	{
 		i = 0;
 		while (inp->args[++i])
 		{
-			key_value = split_by_first(inp->args[i], '=');
-			elem = init_envp(key_value[0], key_value[1]);
-			add_env_value(envp, elem);
-			free(key_value);
+			if (is_valid(inp->args[i]))
+				export_variable(envp, inp->args[i]);
+			else
+			{
+				ft_putstr_fd("export: '", 2);
+				ft_putstr_fd(inp->args[i], 2);
+				res = error_str("': not a valid identifier", 1);
+			}
 		}
 	}
-	return (errno);
+	return (res);
 }

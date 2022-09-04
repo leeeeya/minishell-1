@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 00:06:09 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/31 21:32:08 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 19:24:19 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,14 @@ void	my_perror(t_data *data)
 	perror(RED "Error" CLOSE);
 }
 
-void	error_exit()
+void	error_exit(void)
 {
 	perror(RED "Error" CLOSE);
 	exit(errno);
+}
+
+int	error_str(char *s, int code)
+{
+	ft_putendl_fd(s, 2);
+	return (code);
 }

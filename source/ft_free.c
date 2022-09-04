@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 21:40:21 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/31 22:09:49 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 19:32:26 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	del_envp(void *envp_list)
 	free(envp);
 }
 
+// need close fd???!
 void	free_inp(t_input *inp)
 {
-	// need close fd???!
 	t_input	*tmp;
 
 	while (inp)

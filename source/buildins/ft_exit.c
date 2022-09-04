@@ -6,11 +6,11 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:38:00 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/18 14:56:39 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/03 00:26:45 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	ft_isnum(char *arr)
 {
@@ -38,8 +38,8 @@ int	ft_exit(t_input *inp, t_list *envp)
 		{
 			ft_putstr_fd("exit: Illegal number: ", STDOUT_FILENO);
 			ft_putendl_fd(inp->args[1], STDOUT_FILENO);
-			return (1);
+			return (EXIT_FAILURE);
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

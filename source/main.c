@@ -6,32 +6,26 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:38:50 by falarm            #+#    #+#             */
-/*   Updated: 2022/08/31 00:51:01 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 23:43:44 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**get_args()
+char	**get_args(char *s)
 {
 	char	**args;
 
-	args = (char **) malloc(sizeof(char *) * 2);
-	if (!args)
-		return (NULL);
-	args[0] = ft_strdup("/usr/bin/cat");
-	// args[1] = ft_strdup("HUI");
-	// args[2] = ft_strdup("SOS");
-	args[1] = NULL;
+	args = ft_split(s, ' ');
 	return (args);
 }
 
-t_input	*init_inp()
+t_input	*init_inp(char *s)
 {
 	t_input	*input;
 
 	input = malloc(sizeof(t_input));
-	input->args = get_args();
+	input->args = get_args(s);
 	input->infile_name = NULL;
 	input->outfile_name = NULL;
 	input->infile = 0;
@@ -42,15 +36,32 @@ t_input	*init_inp()
 	return (input);
 }
 
+char	*print_promt(int status)
+{
+	char	*cwd;
+	char	*tmp;
+
+	cwd = getcwd(NULL, 0);
+	if (status)
+		tmp = ft_strjoin(RED PROMT_BAD CLOSE BLU, cwd);
+	else
+		tmp = ft_strjoin(GRN PROMT_NORM CLOSE BLU, cwd);
+	free(cwd);
+	cwd = ft_strjoin(tmp, CLOSE "$ ");
+	free(tmp);
+	return (cwd);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 	t_input	*inp;
+	char	*s;
+	char	*promt;
 
 	(void) argc;
 	(void) argv;
-	// signal(SIGINT, sigint_handler);
-	// signal(SIGQUIT, sigquit_handler);
+	signal(SIGINT, sigint_handler);
 	data = init_data(envp);
 	if (!data)
 	{
@@ -59,15 +70,24 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (!data->exit_flag)
 	{
-		ft_putendl_fd(BEGIN(49, 31) PROMT CLOSE "$", 1);
-		inp = init_inp();	// call parser
-		// add_history();
-		if (!inp)
+		signal(SIGQUIT, SIG_IGN);
+		promt = print_promt(data->exit_status);
+		s = readline(promt);
+		// call parser
+		inp = init_inp(s);
+		add_history(s);
+		free(s);
+		free(promt);
+		if (!inp->args)
+		{
 			eof_handler(data);
-		else if (inp->type_of_file != -1)	// bad input	need create flag
+			// for test while don't have parser
+			free_inp(inp);
+		}
+		else if (inp->type_of_file != -1)
 			my_exec(data, inp);
+		// bad input	need create flag
 		free_inp(inp);
-		data->exit_flag = 1;
 	}
 	free_data(data);
 	return (0);
