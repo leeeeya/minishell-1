@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:36:42 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 23:34:27 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/08 19:45:00 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ int	cd_minus(t_list *envp)
 	char	*tmp;
 	char	*pwd;
 
+	pwd = getcwd(NULL, 0);
 	tmp = get_envp_value(envp, "OLDPWD");
 	if (chdir(tmp) == -1)
+	{
+		free(pwd);
 		return (error_str("cd: OLDPWD not set", 1));
-	pwd = getcwd(NULL, 0);
+	}
 	ft_putendl_fd(tmp, 1);
 	add_env_value(envp, init_envp("PWD", tmp));
 	add_env_value(envp, init_envp("OLDPWD", pwd));
@@ -37,6 +40,7 @@ int	cd_path(t_input *inp, t_list *envp)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(inp->args[1], 2);
+		free(cwd);
 		return (error_str(": No such file or directory", 1));
 	}
 	add_env_value(envp, init_envp("OLDPWD", cwd));
@@ -53,7 +57,10 @@ int	cd_home(t_list *envp)
 
 	cwd = getcwd(NULL, 0);
 	if (chdir(get_envp_value(envp, "HOME")) == -1)
+	{
+		free(cwd);
 		return (error_str("cd: HOME is undefined", 1));
+	}
 	add_env_value(envp, init_envp("OLDPWD", cwd));
 	free(cwd);
 	cwd = get_envp_value(envp, "HOME");
