@@ -6,7 +6,7 @@
 #    By: falarm <falarm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 01:47:12 by falarm            #+#    #+#              #
-#    Updated: 2022/09/08 19:40:09 by falarm           ###   ########.fr        #
+#    Updated: 2022/09/08 19:59:47 by falarm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJECTS_LIST	=	$(patsubst %.c, %.o, $(SOURCES_LIST))	\
 					
 OBJECTS			=	$(addprefix $(OBJECTS_DIR), $(OBJECTS_LIST))
 
-LIBRARY			=	./libft/libft.a -lreadline
+LIBRARY			=	./libft/libft.a
 
 INCLUDE			=	./include/
 HEADER_LIST		=	minishell.h
@@ -40,15 +40,10 @@ FLAGS			=	-Wall -Wextra -Werror
 
 RM				=	rm -rf
 
-all:				libft $(NAME)
+all:				$(NAME)
 
-libft:
-					@echo TUT
-					@$(MAKE) -C ./libft/
-					@$(MAKE) -C ./libft/ bonus
-
-$(NAME):			$(OBJECTS_DIR) $(OBJECTS)
-					$(CC) $(FLAGS) $(OBJECTS) $(LIBRARY) -o $(NAME)
+$(NAME):			$(OBJECTS_DIR) $(OBJECTS) $(LIBRARY)
+					$(CC) $(FLAGS) $(OBJECTS) $(LIBRARY) -lreadline -o $(NAME)
 
 $(OBJECTS_DIR):
 					mkdir -p $(OBJECTS_DIR)
@@ -58,6 +53,10 @@ $(OBJECTS_DIR)%.o:	$(BUILDINS_DIR)%.c $(HEADER)
 
 $(OBJECTS_DIR)%.o:	$(SOURCES_DIR)%.c $(HEADER)
 					$(CC) $(FLAGS) -c $< -o $@ -I $(INCLUDE)
+
+$(LIBRARY):
+					@$(MAKE) -sC ./libft
+					@$(MAKE) -sC ./libft bonus
 
 clean:
 					@$(RM) $(OBJECTS_DIR)
