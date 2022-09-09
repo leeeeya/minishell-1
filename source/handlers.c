@@ -44,7 +44,7 @@ void	sigquit_handler(int n)
 }
 
 //	Ctrl + D
-void	eof_handler(t_data *data)
+void	eof_handler(t_ms *data)
 {
 	free_data(data);
 	exit(0);

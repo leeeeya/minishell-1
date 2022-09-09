@@ -12,13 +12,13 @@
 
 #include "../include/minishell.h"
 
-void	error_malloc(t_data *data)
+void	error_malloc(t_ms *data)
 {
 	data->exit_flag = TRUE;
 	ft_putendl_fd(RED "Error: " CLOSE "malloc returned NULL!", 2);
 }
 
-void	my_perror(t_data *data)
+void	my_perror(t_ms *data)
 {
 	data->exit_status = errno;
 	perror(RED "Error" CLOSE);

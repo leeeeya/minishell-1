@@ -33,7 +33,7 @@ void	my_dup(t_input *inp, int in, int out)
 		error_exit();
 }
 
-int	ft_buildins(t_data *data, t_input *inp)
+int	ft_buildins(t_ms *data, t_input *inp)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ int	ft_buildins(t_data *data, t_input *inp)
 	return (FALSE);
 }
 
-void	my_execute(t_data *data, t_input *inp, int pipe_count, int pipe_id)
+void	my_execute(t_ms *data, t_input *inp, int pipe_count, int pipe_id)
 {
 	pid_t	pid;
 
@@ -77,7 +77,7 @@ void	my_execute(t_data *data, t_input *inp, int pipe_count, int pipe_id)
 	}
 }
 
-void	my_exec(t_data *data, t_input *inp)
+void	my_exec(t_ms *data, t_input *inp)
 {
 	t_input	*tmp;
 	int		pipe_count;

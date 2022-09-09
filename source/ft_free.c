@@ -51,7 +51,7 @@ void	free_inp(t_input *inp)
 	}
 }
 
-void	free_data(t_data *data)
+void	free_data(t_ms *data)
 {
 	ft_lstclear(&data->envp_list, (*del_envp));
 	if (data->pipes)
@@ -59,7 +59,7 @@ void	free_data(t_data *data)
 	free(data);
 }
 
-void	close_pipes(t_data *data, int pipe_count)
+void	close_pipes(t_ms *data, int pipe_count)
 {
 	int	i;
 

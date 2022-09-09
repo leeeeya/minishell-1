@@ -54,7 +54,7 @@ char	*print_promt(int status)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*data;
+	t_ms	*data;
 	t_input	*inp;
 	char	*s;
 	char	*promt;
@@ -62,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	signal(SIGINT, sigint_handler);
-	data = init_data(envp);
+	data = init_ms(envp);
 	if (!data)
 	{
 		ft_putendl_fd(RED "Error: " CLOSE "malloc returned NULL pointer!", 2);
