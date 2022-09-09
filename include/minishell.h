@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
+# include "../../../libft/libft.h"
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -70,14 +70,14 @@ typedef struct s_buildin
 	int				(*func)(t_input *, t_list *);
 }	t_buildin;
 
-typedef struct s_ms
+typedef struct s_data
 {
 	int				exit_flag;
 	int				exit_status;
 	int				*pipes;
 	t_list			*envp_list;
 	t_buildin		buildins[7];
-}	t_ms;
+}	t_data;
 
 //build-ins
 int		ft_cd(t_input *inp, t_list *envp);
@@ -99,15 +99,15 @@ char	**split_by_first(char *s, char c);
 
 //init.c
 t_envp	*init_envp(char	*key, char *value);
-t_ms	*init_ms(char	**env);
-int		init_pipes(t_ms *data, int count);
+t_data	*init_data(char	**env);
+int		init_pipes(t_data *data, int count);
 
 //ft_free.c
-void	free_data(t_ms *data);
+void	free_data(t_data *data);
 void	free_double_arr(char **arr);
 void	free_inp(t_input *inp);
 void	del_envp(void *envp_list);
-void	close_pipes(t_ms *data, int pipe_count);
+void	close_pipes(t_data *data, int pipe_count);
 
 //env_utils.c
 void	add_env_value(t_list *envp_list, t_envp *envp);
@@ -118,17 +118,17 @@ char	**get_envp(t_list *envp_list);
 //handlers.c
 void	sigint_handler(int n);
 void	sigquit_handler(int n);
-void	eof_handler(t_ms *data);
+void	eof_handler(t_data *data);
 
 //ft_list.c
 int		lst_size(t_input *inp);
 
 //executer.c
-void	my_exec(t_ms *data, t_input *inp);
+void	my_exec(t_data *data, t_input *inp);
 
 //errors.c
-void	error_malloc(t_ms *data);
-void	my_perror(t_ms *data);
+void	error_malloc(t_data *data);
+void	my_perror(t_data *data);
 void	error_exit(void);
 int		error_str(char *s, int code);
 

@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:38:50 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/08 19:07:37 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/04 23:43:44 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*print_promt(int status)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_ms	*data;
+	t_data	*data;
 	t_input	*inp;
 	char	*s;
 	char	*promt;
@@ -62,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	signal(SIGINT, sigint_handler);
-	data = init_ms(envp);
+	data = init_data(envp);
 	if (!data)
 	{
 		ft_putendl_fd(RED "Error: " CLOSE "malloc returned NULL pointer!", 2);
@@ -75,8 +75,6 @@ int	main(int argc, char **argv, char **envp)
 		s = readline(promt);
 		// call parser
 		inp = init_inp(s);
-		// ft_putendl_fd(inp->args[0], 1);
-		// ft_putendl_fd(inp->args[1], 1);
 		add_history(s);
 		free(s);
 		free(promt);

@@ -48,11 +48,11 @@ t_list	*init_envp_list(char **envp)
 	return (list);
 }
 
-t_ms	*init_ms(char	**env)
+t_data	*init_data(char	**env)
 {
-	t_ms	*data;
+	t_data	*data;
 
-	data = (t_ms *) malloc(sizeof(t_ms));
+	data = (t_data *) malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
 	data->exit_flag = FALSE;
@@ -76,7 +76,7 @@ t_ms	*init_ms(char	**env)
 	return (data);
 }
 
-int	init_pipes(t_ms *data, int count)
+int	init_pipes(t_data *data, int count)
 {
 	int	i;
 
