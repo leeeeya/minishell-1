@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 21:40:21 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 19:32:26 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/11 20:19:55 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	free_double_arr(char **arr)
 {
-	char	*tmp;
+	int	i;
 
 	if (!arr)
 		return ;
-	while (*arr)
-	{
-		tmp = *arr++;
-		free(tmp);
-	}
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr[i]);
+	free(arr);
 }
 
 void	del_envp(void *envp_list)
@@ -31,8 +31,14 @@ void	del_envp(void *envp_list)
 
 	envp = (t_envp *)envp_list;
 	free(envp->key);
-	free(envp->value);
+	envp->key = NULL;
+	if (envp->value)
+	{
+		free(envp->value);
+		envp->value = NULL;
+	}
 	free(envp);
+	envp = NULL;
 }
 
 // need close fd???!

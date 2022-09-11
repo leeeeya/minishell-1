@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:38:36 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 19:31:18 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/11 20:42:18 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ static void	delete(t_list *curr, t_list *prev)
 		curr->content = curr->next->content;
 		curr->next = curr->next->next;
 		free(tmp);
+	}
+	else
+	{
+		ft_putendl_fd("TUT", 1);
+		free(curr);
 	}
 }
 

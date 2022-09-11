@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:39:02 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/03 00:24:49 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/11 20:49:15 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	ft_env(t_input *inp, t_list *envp)
 	tmp = envp;
 	while (tmp)
 	{
+		printf("envp memory: %p\n", tmp);
 		elem = tmp->content;
+		printf("envp->content memory: %p\n", elem);
+		printf("content->key memory: %p\n", elem->key);
 		ft_putstr_fd(elem->key, 1);
 		ft_putstr_fd("=", 1);
 		if (elem->value)

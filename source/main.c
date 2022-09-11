@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:38:50 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 23:43:44 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/11 18:55:18 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int	main(int argc, char **argv, char **envp)
 		free(promt);
 		if (!inp->args)
 		{
+			free_inp(inp);
 			eof_handler(data);
 			// for test while don't have parser
-			free_inp(inp);
 		}
 		else if (inp->type_of_file != -1)
 			my_exec(data, inp);

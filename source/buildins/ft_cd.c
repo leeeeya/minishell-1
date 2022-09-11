@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:36:42 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 23:34:27 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/11 16:32:28 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	cd_minus(t_list *envp)
 	char	*pwd;
 
 	tmp = get_envp_value(envp, "OLDPWD");
+	pwd = getcwd(NULL, 0);
 	if (chdir(tmp) == -1)
 		return (error_str("cd: OLDPWD not set", 1));
-	pwd = getcwd(NULL, 0);
 	ft_putendl_fd(tmp, 1);
 	add_env_value(envp, init_envp("PWD", tmp));
 	add_env_value(envp, init_envp("OLDPWD", pwd));
