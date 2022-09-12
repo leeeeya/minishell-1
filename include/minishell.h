@@ -6,14 +6,14 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:39:09 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 23:47:59 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 18:28:10 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../../../libft/libft.h"
+# include "../libft/libft.h"
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -24,7 +24,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <wait.h>
+# include <string.h>
+// # include <wait.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -67,7 +68,7 @@ typedef struct s_input
 typedef struct s_buildin
 {
 	char			*name;
-	int				(*func)(t_input *, t_list *);
+	int				(*func)(t_input *, t_list **);
 }	t_buildin;
 
 typedef struct s_data
@@ -80,13 +81,13 @@ typedef struct s_data
 }	t_data;
 
 //build-ins
-int		ft_cd(t_input *inp, t_list *envp);
-int		ft_echo(t_input *inp, t_list *envp);
-int		ft_env(t_input *inp, t_list *envp);
-int		ft_exit(t_input *inp, t_list *envp);
-int		ft_export(t_input *inp, t_list *envp);
-int		ft_pwd(t_input *inp, t_list *envp);
-int		ft_unset(t_input *inp, t_list *envp);
+int		ft_cd(t_input *inp, t_list **envp);
+int		ft_echo(t_input *inp, t_list **envp);
+int		ft_env(t_input *inp, t_list **envp);
+int		ft_exit(t_input *inp, t_list **envp);
+int		ft_export(t_input *inp, t_list **envp);
+int		ft_pwd(t_input *inp, t_list **envp);
+int		ft_unset(t_input *inp, t_list **envp);
 
 //main.c
 char	*print_promt(int status);

@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:00:35 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/11 17:13:22 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 18:30:41 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_buildins(t_data *data, t_input *inp)
 		if (!ft_strncmp(inp->args[0], data->buildins[i].name,
 				ft_strlen(inp->args[0])))
 		{
-			data->exit_status = data->buildins[i].func(inp, data->envp_list);
+			data->exit_status = data->buildins[i].func(inp, &data->envp_list);
 			return (TRUE);
 		}
 	}

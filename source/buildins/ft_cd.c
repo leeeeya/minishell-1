@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:36:42 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/11 16:32:28 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 18:32:00 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ int	cd_home(t_list *envp)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(t_input *inp, t_list *envp)
+int	ft_cd(t_input *inp, t_list **envp)
 {
 	if (inp->args[1])
 	{
 		if (inp->args[2])
 			return (error_str("cd: too many arguments", 1));
 		else if (!ft_strcmp("-", inp->args[1]))
-			return (cd_minus(envp));
+			return (cd_minus(*envp));
 		else
-			return (cd_path(inp, envp));
+			return (cd_path(inp, *envp));
 	}
 	else
-		return (cd_home(envp));
+		return (cd_home(*envp));
 }

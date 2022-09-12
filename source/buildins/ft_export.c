@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:38:21 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/04 23:44:57 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 19:59:32 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	env_copy(t_list *envp)
 	}
 }
 
-void	export_variable(t_list *envp, char *s)
+void	export_variable(t_list **envp, char *s)
 {
 	char	**key_value;
 	t_envp	*elem;
@@ -53,19 +53,22 @@ void	export_variable(t_list *envp, char *s)
 	if (key_value)
 	{
 		elem = init_envp(key_value[0], key_value[1]);
-		add_env_value(envp, elem);
-		free(key_value);
+		if (*envp)
+			add_env_value(*envp, elem);
+		else
+			*envp = ft_lstnew(elem);
+		free_double_arr(key_value);
 	}
 }
 
-int	ft_export(t_input *inp, t_list *envp)
+int	ft_export(t_input *inp, t_list **envp)
 {
 	int		i;
 	int		res;
 
 	res = EXIT_SUCCESS;
 	if (!inp->args[1])
-		env_copy(envp);
+		env_copy(*envp);
 	else
 	{
 		i = 0;

@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:38:00 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/03 00:26:45 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 18:29:32 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_isnum(char *arr)
 	return (TRUE);
 }
 
-int	ft_exit(t_input *inp, t_list *envp)
+int	ft_exit(t_input *inp, t_list **envp)
 {
 	(void) envp;
 	if (double_arr_size(inp->args) == 1)

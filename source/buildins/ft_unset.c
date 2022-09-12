@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:38:36 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/11 20:42:18 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 20:01:57 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,38 @@ static void	delete(t_list *curr, t_list *prev)
 {
 	t_list	*tmp;
 
-	del_envp(curr->content);
 	if (prev)
 	{
 		prev->next = curr->next;
-		free(curr);
+		ft_lstdelone(curr, (*del_envp));
 	}
 	else if (curr->next)
 	{
+		del_envp(curr->content);
 		tmp = curr->next;
 		curr->content = curr->next->content;
 		curr->next = curr->next->next;
 		free(tmp);
 	}
-	else
-	{
-		ft_putendl_fd("TUT", 1);
-		free(curr);
-	}
 }
 
-static void	check(t_list *envp, char *key)
+static void	check(t_list **envp, char *key)
 {
 	t_list	*tmp;
 	t_list	*prev;
 	t_envp	*curr;
 
 	prev = NULL;
-	tmp = envp;
+	tmp = *envp;
 	while (tmp)
 	{
 		curr = tmp->content;
 		if (!ft_strncmp(key, curr->key, ft_strlen(key)))
 		{
-			delete(tmp, prev);
+			if (!tmp->next)
+				ft_lstclear(envp, (*del_envp));
+			else
+				delete(tmp, prev);
 			return ;
 		}
 		prev = tmp;
@@ -70,7 +68,7 @@ static void	check(t_list *envp, char *key)
 	}
 }
 
-int	ft_unset(t_input *inp, t_list *envp)
+int	ft_unset(t_input *inp, t_list **envp)
 {
 	int	i;
 	int	res;
