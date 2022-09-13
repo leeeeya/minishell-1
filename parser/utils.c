@@ -49,7 +49,7 @@ int itter(t_data *d, char **line_to_write, char type)
 	return 0;
 }
 
-int get_valid_fn(t_data *d, t_list **fns)
+int	get_valid_fn(t_data *d, t_list **fns)
 {
 	t_list *new = NULL;
 	char *file_name = NULL;
@@ -69,7 +69,7 @@ int get_valid_fn(t_data *d, t_list **fns)
 		tmp = NULL;
 		d->cmd_line++;
 	}
-	if ( file_name)
+	if (file_name)
 	{
 		new = ft_lstnew(file_name);
 		file_name = NULL;

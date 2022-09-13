@@ -34,8 +34,8 @@ int get_delimeter(t_data *d)
 	d->cmd_line++;
 	if (*d->cmd_line == '\n' || *d->cmd_line == '\0')
 	{
-		print_error(d, "syntax error near unexpected token ", "`newline'");
-		*d->exit_code = UNEXP;
+		print_error(d, "parse error near ", "`\n'");
+		*d->exit_code = 1;
 		return ERROR;
 	}
 	while (*d->cmd_line == ' ')
@@ -43,11 +43,11 @@ int get_delimeter(t_data *d)
 	if (get_valid_fn(d, &d->ready_data->hd_delimeter) < 0)
 		return ERROR;
 	return 0;
-//	if (get_valid_fn(d, &d->ready_data->hd_delimeter))
-//		return 1;
-//	if (!*d->cmd_line)
-//		return 1;
-//	return 0;
+	// if (get_valid_fn(d, &d->ready_data->hd_delimeter))
+	// 	return 1;
+	// if (!*d->cmd_line)
+	// 	return 1;
+	// return 0;
 }
 
 
@@ -83,7 +83,7 @@ int get_infile_name(t_data *d)
 		}
 		if (handle_ifn(d) < 0)
 			return ERROR;
-//		handle_spaces(d, 'i');
+		// handle_spaces(d, 'i');
 
 		int val = get_valid_fn(d, &d->ready_data->infile_name);
 		if (val > 0)
@@ -109,16 +109,16 @@ int get_outfile_name(t_data *d)
 			*d->exit_code = UNEXP;
 			return ERROR;
 		}
-//		if (*d->cmd_line == '\\')
-//		{
-//			print_error(d, "syntax error near unexpected token ", "`\\'");
-//			exit(1);
-//		}
-//		if (*d->cmd_line == '>')
-//		{
-//			d->ready_data->type_of_file = O_APPEND;
-//			d->cmd_line++;
-//		}
+		// if (*d->cmd_line == '\\')
+		// {
+		// 	print_error(d, "syntax error near unexpected token ", "`\\'");
+		// 	exit(1);
+		// }
+		// if (*d->cmd_line == '>')
+		// {
+		// 	d->ready_data->type_of_file = O_APPEND;
+		// 	d->cmd_line++;
+		// }
 		else
 			d->ready_data->type_of_file = O_RDWR;
 		int val = get_valid_fn(d, &d->ready_data->outfile_name);
@@ -204,42 +204,25 @@ int parser(char *cmd_line, int *exit_code, char **env)
 {
 	t_data	d;
 	t_input	*head;
-	char	*tmp;
+	int		val;
 
-	//// init data
-	d.ready_data = input_new(exit_code);
-	check_error(d.ready_data, &d, "input_new");
-	d.cmd_line = ft_strdup(cmd_line);
-	tmp = ft_strtrim(d.cmd_line, "\n");
-	check_error(tmp, &d, "ft_strtrim");
-	free(d.cmd_line);
-	d.cmd_line = ft_strdup(tmp);
-	free(tmp);
-	tmp = NULL;
-	check_error(d.cmd_line, &d, "ft_strdup");
+	init_parse(&d, exit_code, cmd_line, env);
 	head = d.ready_data;
-	d.head_cmd_line = d.cmd_line;
-	d.exit_code = exit_code;
-	get_env(&d, env);
-	d.paths = NULL;
 	// main loop
 	while (*d.cmd_line)
 	{
 		while (*d.cmd_line == ' ')
 			d.cmd_line++;
-
-		int val = get_infile_name(&d);
+		val = get_infile_name(&d);
 		if (val > 0)
 			continue;
 		else if (val < 0)
 			return ERROR;
-
 		val = get_outfile_name(&d);
 		if (val > 0)
 			continue;
 		else if (val < 0)
 			return ERROR;
-
 		if (*d.cmd_line == '|')
 		{
 			d.cmd_line++;

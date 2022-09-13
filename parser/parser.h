@@ -92,6 +92,9 @@ int		get_valid_fn(t_data *d, t_list **fns);
 int		handle_spaces(t_data *d, char type);
 int		handle_ifn(t_data *d);
 
+//init_parse.c
+void	init_parse(t_data *d, int *exit_code, char *cmd_line, char **env);
+
 // void syntax_error(t_data *d, char *token);
 
 #endif //PARSER_H
