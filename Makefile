@@ -6,7 +6,7 @@
 #    By: falarm <falarm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 01:47:12 by falarm            #+#    #+#              #
-#    Updated: 2022/09/08 19:59:47 by falarm           ###   ########.fr        #
+#    Updated: 2022/09/12 20:35:58 by falarm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,16 +22,22 @@ BUILDINS_LIST	=	ft_cd.c		ft_echo.c	ft_env.c	\
 					ft_exit.c	ft_export.c	ft_pwd.c	\
 					ft_unset.c
 
+PARSER_DIR		=	./parser/
+PARSER_LIST		=	env_parse.c	errors.c	get_args.c		\
+					main_parse.c	quotes.c	search_path.c	\
+					utils.c	input_utils.c	input_delete.c
+
 OBJECTS_DIR		=	./objects/
 OBJECTS_LIST	=	$(patsubst %.c, %.o, $(SOURCES_LIST))	\
-					$(patsubst %.c, %.o, $(BUILDINS_LIST))
+					$(patsubst %.c, %.o, $(BUILDINS_LIST))	\
+					$(patsubst %.c, %.o, $(PARSER_LIST))
 					
 OBJECTS			=	$(addprefix $(OBJECTS_DIR), $(OBJECTS_LIST))
 
 LIBRARY			=	./libft/libft.a
 
 INCLUDE			=	./include/
-HEADER_LIST		=	minishell.h
+HEADER_LIST		=	minishell.h		parser.h
 HEADER			=	$(addprefix $(INCLUDE), $(HEADER_LIST))
 
 CC				=	gcc
@@ -49,6 +55,9 @@ $(OBJECTS_DIR):
 					mkdir -p $(OBJECTS_DIR)
 
 $(OBJECTS_DIR)%.o:	$(BUILDINS_DIR)%.c $(HEADER)
+					$(CC) $(FLAGS) -c $< -o $@ -I $(INCLUDE)
+
+$(OBJECTS_DIR)%.o:	$(PARSER_DIR)%.c $(HEADER)
 					$(CC) $(FLAGS) -c $< -o $@ -I $(INCLUDE)
 
 $(OBJECTS_DIR)%.o:	$(SOURCES_DIR)%.c $(HEADER)
