@@ -23,10 +23,10 @@ int	check_exit_status(int status)
 
 void	my_dup(t_input *inp, int in, int out)
 {
-	if (inp->infile != 0)
-		in = inp->infile;
-	if (inp->outfile != 1)
-		out = inp->outfile;
+	if (inp->in_file != 0)
+		in = inp->in_file;
+	if (inp->out_file != 1)
+		out = inp->out_file;
 	if (dup2(in, 0) < 0)
 		error_exit();
 	if (dup2(out, 1) < 0)
@@ -62,9 +62,9 @@ void	my_execute(t_data *data, t_input *inp, int pipe_count, int pipe_id)
 		if (!pipe_count)
 			my_dup(inp, 0, 1);
 		else if (!inp->prev)
-			my_dup(inp, inp->infile, data->pipes[1]);
+			my_dup(inp, inp->in_file, data->pipes[1]);
 		else if (!inp->next)
-			my_dup(inp, data->pipes[2 * pipe_id - 2], inp->outfile);
+			my_dup(inp, data->pipes[2 * pipe_id - 2], inp->out_file);
 		else
 			my_dup(inp, data->pipes[2 * pipe_id - 2],
 				data->pipes[2 * pipe_id + 1]);

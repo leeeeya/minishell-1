@@ -6,35 +6,35 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:38:50 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/11 18:55:18 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/12 20:31:39 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**get_args(char *s)
-{
-	char	**args;
-
-	args = ft_split(s, ' ');
-	return (args);
-}
-
-t_input	*init_inp(char *s)
-{
-	t_input	*input;
-
-	input = malloc(sizeof(t_input));
-	input->args = get_args(s);
-	input->infile_name = NULL;
-	input->outfile_name = NULL;
-	input->infile = 0;
-	input->outfile = 1;
-	input->type_of_file = 0;
-	input->next = NULL;
-	input->prev = NULL;
-	return (input);
-}
+//char	**get_args(char *s)
+//{
+//	char	**args;
+//
+//	args = ft_split(s, ' ');
+//	return (args);
+//}
+//
+//t_input	*init_inp(char *s)
+//{
+//	t_input	*input;
+//
+//	input = malloc(sizeof(t_input));
+//	input->args = get_args(s);
+//	input->infile_name = NULL;
+//	input->outfile_name = NULL;
+//	input->infile = 0;
+//	input->outfile = 1;
+//	input->type_of_file = 0;
+//	input->next = NULL;
+//	input->prev = NULL;
+//	return (input);
+//}
 
 char	*print_promt(int status)
 {
@@ -58,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	t_input	*inp;
 	char	*s;
 	char	*promt;
+	char	**my_env;
 
 	(void) argc;
 	(void) argv;
@@ -74,10 +75,13 @@ int	main(int argc, char **argv, char **envp)
 		promt = print_promt(data->exit_status);
 		s = readline(promt);
 		// call parser
-		inp = init_inp(s);
+		// inp = init_inp(s);
+		my_env = get_envp(data->envp_list);
+		inp = parser(s, &data->exit_status, my_env);
 		add_history(s);
 		free(s);
 		free(promt);
+		free_double_arr(my_env);
 		if (!inp->args)
 		{
 			free_inp(inp);
