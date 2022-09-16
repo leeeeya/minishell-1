@@ -6,7 +6,7 @@
 /*   By: falarm <falarm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:39:09 by falarm            #+#    #+#             */
-/*   Updated: 2022/09/12 18:28:10 by falarm           ###   ########.fr       */
+/*   Updated: 2022/09/16 20:10:33 by falarm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@
 # define BLOD  "\001\033[1m\002" // Подчеркнуть, жирным шрифтом, выделить
 // # define BEGIN(x,y) "\001\033["#x";"#y"m\002" x: background, y: foreground
 
+# define MALLOC_ERROR "Error : Malloc returned NULL\n"
+# define MALLOC_ERROR_CODE 1
+# define PIPE_ERROR "Error : Pipe\n"
+# define SYNTAX_ERROR_CODE 2
+# define NO_FILE_MENTIONED_ERROR "Error: no file after redirect/pipe\n"
+# define UNEXPECTED_SYMBOL_ERROR "Error: unexpected symbol\n"
+# define UNCLOSED_QUOTES_ERROR "Error: unclosed quotes\n"
+
+# define HEREDOC ".heredoc_tmp"
+
 typedef struct s_hist
 {
 	int				index;
@@ -64,6 +74,21 @@ typedef struct s_input
 	struct s_input	*next;
 	struct s_input	*prev;
 }	t_input;
+
+typedef struct s_command
+{
+	char	**args;
+	int		input_desc;
+	int		output_desc;
+}	t_command;
+
+typedef struct s_app
+{
+	char		*line;
+	char		**tokens;
+	int			cmd_number;
+	t_list		*cmds;
+}	t_app;
 
 typedef struct s_buildin
 {
@@ -132,5 +157,48 @@ void	error_malloc(t_data *data);
 void	my_perror(t_data *data);
 void	error_exit(void);
 int		error_str(char *s, int code);
+
+/* parser.c */
+t_command	start_parser(t_app *app);
+void	free_cmds(t_app *app);
+void	free_tokens(t_app *app);
+
+/* parser_utils.c */
+size_t	array_len(char **array);
+char	*str_range_cpy(char *str, size_t start, size_t end);
+int		find_chr(const char *s, int c);
+char	*str_insert(char *str, char *to_insert, size_t start, size_t end);
+
+/* get_tokens.c */
+void	get_tokens(t_app *app);
+
+/* expand_tokens.c */
+void	expand_tokens(t_app *app);
+
+/* alloc_cmds.c */
+void	alloc_cmds(t_app *app);
+void	get_cmds(t_app *app);
+
+/* delete_quotes.c */
+char	*delete_quotes(char *token);
+
+/* array_operations.c */
+char	**array_add(char **array, char *str);
+char	**array_remove(char **array, size_t index);
+
+/* handle_redirects.c */
+void	handle_redirects(t_app *app, size_t i, t_command *cmd);
+
+/* syntax_checker.c */
+int		check_quotes(char *line);
+
+/* check_line.c */
+int		check_line(char *line);
+int		is_space(char c);
+
+/* check_tokens.c */
+int		check_tokens(t_app *app);
+
+void	errno_exit(char *err);
 
 #endif
