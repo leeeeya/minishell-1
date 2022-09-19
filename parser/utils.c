@@ -3,10 +3,12 @@
 
 char *append(t_parse *d, char *str, char ch)
 {
-	char *res;
+	char *res = NULL;
 	int i;
 
 	i = 0;
+	if (!str)
+		str = ft_strdup("");
 	res = ft_calloc(ft_strlen(str) + 2, sizeof (char));
 	check_error(res, d, "ft_calloc");
 	while(str && str[i])
@@ -28,6 +30,7 @@ char *append(t_parse *d, char *str, char ch)
 
 int itter(t_parse *d, void **line_to_write, char type)
 {
+
 	if (*d->cmd_line == '\"')
     {
 		if (pars_doub_quote(line_to_write, d) < 1)
@@ -57,7 +60,7 @@ int get_valid_fn(t_parse *d, t_list **fns)
 
 	while (*d->cmd_line)
 	{
-		int val = itter(d, &file_name, 'f');
+		int val = itter(d, (void **)&file_name, 'f');
 		if (val > 0)
 			continue;
 		else if (val < 0)

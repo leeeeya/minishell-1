@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+CMakeLists.txt
+cmake-build-debug/
+libft/libft.a
+main.c
+minishell
+objects/
+test.c

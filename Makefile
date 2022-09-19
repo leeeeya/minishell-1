@@ -23,7 +23,7 @@ BUILDINS_LIST	=	ft_cd.c		ft_echo.c	ft_env.c	\
 					ft_unset.c
 
 PARSER_DIR		=	./parser/
-PARSER_LIST		=	env_parse.c	errors.c	get_args.c		\
+PARSER_LIST		=	env_parse.c	errors_parse.c	get_args.c		\
 					main_parse.c	quotes.c	search_path.c	\
 					utils.c	input_utils.c	input_delete.c
 

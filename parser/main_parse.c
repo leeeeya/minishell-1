@@ -1,4 +1,4 @@
-#include "../include/parser.h"
+//#include "../include/parser.h"
 #include "../include/minishell.h"
 
 void get_heredoc_fd(t_parse *d)
@@ -173,7 +173,7 @@ int check_accesses_outf(t_parse *d)
 			*d->exit_code = NO_F;
 			return ERROR;
 		}
-		else if (*d->ready_data->outfile_name->content)
+		else if (*(char *)d->ready_data->outfile_name->content)
 		{
 			if (access(d->ready_data->outfile_name->content, F_OK) != 0) {
 				// todo handle error
@@ -207,6 +207,8 @@ t_input *parser(char *cmd_line, int *exit_code, char **env)
 	t_input *head;
 	char    *tmp;
 
+	if (!cmd_line)
+
 	//// init data
     d.ready_data = input_new(exit_code);
 	check_error(d.ready_data, &d, "input_new");
@@ -235,13 +237,13 @@ t_input *parser(char *cmd_line, int *exit_code, char **env)
 		if (val > 0)
 			continue;
 		else if (val < 0)
-			return ERROR;
+			return (t_input *)ERROR;
 
 		val = get_outfile_name(&d);
 		if (val > 0)
 			continue;
 		else if (val < 0)
-			return ERROR;
+			return (t_input *)ERROR;
 
 		if (*d.cmd_line == '|')
 		{
@@ -250,7 +252,7 @@ t_input *parser(char *cmd_line, int *exit_code, char **env)
 			{
 				print_error(&d, "unexpected token ", "`|'");
 				*d.exit_code = 111;
-				return ERROR;
+				return (t_input *)ERROR;
 			}
 			while (*d.cmd_line == ' ')
 				d.cmd_line++;
@@ -258,7 +260,7 @@ t_input *parser(char *cmd_line, int *exit_code, char **env)
 			{
 				print_error(&d, "syntax error near unexpected token ", "`|'");
 				*d.exit_code = 111;
-				return ERROR;
+				return (t_input *)ERROR;
 			}
 			t_input *new = input_new();
 			input_add_back(&d.ready_data, &new);
@@ -274,11 +276,11 @@ t_input *parser(char *cmd_line, int *exit_code, char **env)
 	{
 		get_heredoc_fd(&d);
 		if (check_accesses_inf(&d) < 0)
-			return ERROR;
+			return (t_input *)ERROR;
 		if (check_accesses_outf(&d) < 0)
-			return ERROR;
+			return (t_input *)ERROR;
 		if (get_true_path(&d) < 0)
-			return ERROR;
+			return (t_input *)ERROR;
 		d.ready_data = d.ready_data->next;
 	}
 

@@ -1,4 +1,4 @@
-#include "../include/parser.h"
+//#include "../include/parser.h"
 #include "../include/minishell.h"
 
 int next_arg(t_parse *d, t_list **arg_lst)
@@ -66,7 +66,7 @@ int get_args(t_parse *d)
 		else if (res == 1)
 			continue;
 		char *tmp = append(d, arg_lst->content, *d->cmd_line);
-		if (*arg_lst->content)
+		if (*(char *)arg_lst->content)
 			free(arg_lst->content);
 		arg_lst->content = tmp;
 //		free(tmp);
@@ -74,7 +74,7 @@ int get_args(t_parse *d)
 		d->cmd_line++;
 	}
 	arg_lst = head;
-	if (*arg_lst->content)
+	if (*(char *)arg_lst->content)
 		fetch_arg_array(d, &arg_lst);
 //	ft_lstclear(&head, free);
 	return 0;

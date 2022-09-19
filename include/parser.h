@@ -8,13 +8,7 @@
 #include <errno.h>
 #include <readline/readline.h>
 
-#define UNEXP 258
-#define NO_F 1
-#define COM_NF 127
-#define ERROR (-1)
-#define PERM_DEN 126
-# define FALSE 0
-# define TRUE 1
+
 
 //typedef struct s_input
 //{

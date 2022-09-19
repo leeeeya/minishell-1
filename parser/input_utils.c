@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
 #include "../include/minishell.h"
 
 t_input	*input_new()

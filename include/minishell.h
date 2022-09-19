@@ -30,6 +30,13 @@
 
 # define TRUE 1
 # define FALSE 0
+# define UNEXP 258
+# define NO_F 1
+# define COM_NF 127
+# define ERROR (-1)
+# define PERM_DEN 126
+# define FALSE 0
+# define TRUE 1
 
 # define PROMT_NORM "(ง •̀_•́)ง "
 # define PROMT_BAD  "(๑•̀ᗝ•́)૭ "

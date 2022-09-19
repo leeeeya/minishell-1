@@ -74,24 +74,29 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		promt = print_promt(data->exit_status);
 		s = readline(promt);
-		// call parser
-		// inp = init_inp(s);
-		my_env = get_envp(data->envp_list);
-		inp = parser(s, &data->exit_status, my_env);
-		add_history(s);
-		free(s);
-		free(promt);
-		free_double_arr(my_env);
-		if (!inp->args)
-		{
+
+			my_env = get_envp(data->envp_list);
+			inp = parser(s, &data->exit_status, my_env);
+			// todo check parser error
+			add_history(s);
+			free(s);
+			s = NULL;
+			free(promt);
+			promt = NULL;
+
+			free_double_arr(my_env);
+
+			if (!inp->args) {
+				free_inp(inp);
+				eof_handler(data);
+				// for test while don't have parser
+			} else if (inp->type_of_file != -1) {
+				my_exec(data, inp);
+			}
+			// bad input	need create flag
 			free_inp(inp);
-			eof_handler(data);
-			// for test while don't have parser
-		}
-		else if (inp->type_of_file != -1)
-			my_exec(data, inp);
-		// bad input	need create flag
-		free_inp(inp);
+			inp = NULL;
+//		while (1);
 	}
 	free_data(data);
 	return (0);
