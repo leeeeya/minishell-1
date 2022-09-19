@@ -207,10 +207,8 @@ t_input *parser(char *cmd_line, int *exit_code, char **env)
 	t_input *head;
 	char    *tmp;
 
-	if (!cmd_line)
-
 	//// init data
-    d.ready_data = input_new(exit_code);
+    d.ready_data = input_new();
 	check_error(d.ready_data, &d, "input_new");
 	d.cmd_line = ft_strdup(cmd_line);
 	tmp = ft_strtrim(d.cmd_line, "\n");
